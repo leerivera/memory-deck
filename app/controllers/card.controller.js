@@ -23,7 +23,7 @@ exports.create = (req, res) => {
   };
 
     // Save Tutorial in the database
-    Card.creat(card)
+    Card.create(card)
     .then(data => {
       res.send(data);
     })
@@ -39,6 +39,19 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
+    const number= req.query.number;
+    var condition = number ? { number: { [Op.like]: `%${number}%` } } : null;
+  
+    Tutorial.findAll({ where: condition })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retriving cards"
+        });
+      });
   
 };
 
