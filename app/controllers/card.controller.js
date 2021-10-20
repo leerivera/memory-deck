@@ -77,8 +77,29 @@ exports.findOne = (req, res) => {
   
 };
 
-// Update a Tutorial by the id in the request
+// Update a Card by the id in the request
 exports.update = (req, res) => {
+
+  Card.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Card was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Card with id=${id}. Maybe Card was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Card with id=" + id
+      });
+    });
+
   
 };
 
