@@ -4,6 +4,14 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
+    //validate request
+    if(!req.body.number) {
+        res.status(400).send({
+           message:"Create a card" 
+        })
+
+    }
+
   
 };
 
