@@ -105,6 +105,27 @@ exports.update = (req, res) => {
 
 // Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    Card.destroy({
+        where: { id: id }
+      })
+        .then(num => {
+          if (num == 1) {
+            res.send({
+              message: "Card was deleted successfully!"
+            });
+          } else {
+            res.send({
+              message: `Cannot delete Card with id=${id}. Maybe Tutorial was not found!`
+            });
+          }
+        })
+        .catch(err => {
+          res.status(500).send({
+            message: "Could not delete Card with id=" + id
+          });
+        });
   
 };
 
